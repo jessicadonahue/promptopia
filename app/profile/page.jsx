@@ -13,7 +13,6 @@ const MyProfile = () => {
     
     useEffect(() => {
         async function fetchPosts() {
-            console.log(session)
             const response = await axios.get(`/api/users/${session.user.id}/posts`);
             setPosts(response.data);
         }
