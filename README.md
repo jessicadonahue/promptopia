@@ -1,3 +1,14 @@
+Next Steps:
+[] Implement Search
+    - search by prompt content
+    - search by tag
+    - search by username
+[] Implement Click on tag will fill in search bar
+[] Implement View other profiles
+    - /profile/{profile_id}?name={profile_name}
+    - when click on your own profile redirected to my profile
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

@@ -15,7 +15,6 @@ const handler = NextAuth({
             const sessionUser = await User.findOne({
                 email: session.user.email
             });
-            console.log(sessionUser)
             session.user.id = sessionUser._id.toString();
             return session;
         },
@@ -29,9 +28,11 @@ const handler = NextAuth({
                 })
                 // if not, create a new user and save to db
                 if(!userExists) {
+                    console.log(profile.name)
+                    console.log(profile.name.replace(/\s/g, '').toLowerCase())
                     await User.create({
                         email: profile.email,
-                        username: profile.name.replace(' ', '').toLowerCase(),
+                        username: profile.name.replace(/\s/g, '').toLowerCase(),
                         image: profile.picture
                     })
                 }
