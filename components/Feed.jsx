@@ -18,20 +18,32 @@ const PromptCardList = ({data, handleTagClick}) => {
 }
 export const Feed = () => {
   const [prompts, setPrompts] = useState([]);
+  const [filteredPrompts, setFilteredPrompts] = useState([]);
   const [searchText, setSearchText] = useState('');
-
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    setSearchText(e.target.value)
-  }
 
   useEffect(() => {
     async function fetchPrompts() {
       const response = await axios.get('/api/prompt');
       setPrompts(response.data)
+      setFilteredPrompts(response.data)
     }
     fetchPrompts();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const filteredPrompts = prompts.filter((p) => p.prompt.includes(searchText) || p.tag.includes(searchText) || p.creator.email.includes(searchText));
+    setFilteredPrompts(filteredPrompts)
+  },[searchText]);
+
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setSearchText(e.target.value);
+  }
+
+  const handleTagChange = (tag) => {
+    setSearchText(tag);
+  }
+
   return (
     <section className='feed'>
       <form className='relative w-full flex-center'>
@@ -42,7 +54,7 @@ export const Feed = () => {
           className='search_input peer'
           ></input>
       </form>
-      <PromptCardList data={prompts} handleTagClick={() => {}} />
+      <PromptCardList data={filteredPrompts} handleTagClick={handleTagChange} />
     </section>
   )
 }
